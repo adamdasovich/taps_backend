@@ -1,8 +1,9 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Reservation
-from .serializers import ReservationSerializer
+from .models import *
+from .serializers import *
+import datetime
 
 class ReservationViewSet(viewsets.ModelViewSet):
     queryset = Reservation.objects.all()
@@ -64,3 +65,50 @@ class ReservationViewSet(viewsets.ModelViewSet):
                 {"error": f"An error occurred: {str(e)}"},
                 status=400
             )
+class MoviePollView(generics.RetrieveAPIView):
+    serializer_class = MoviePollSerializer
+
+    def get_object(self):
+        return MoviePoll.get_current_poll()
+
+class VoteView(generics.UpdateAPIView):
+    queryset = MoviePoll.objects.all()
+    serializer_class = MoviePollSerializer
+
+    def update(self, request, *args, **kwargs):
+        poll = self.get_object()
+        movie = request.data.get('movie')
+
+        if movie == poll.movie1:
+            poll.movie1_votes += 1
+        elif movie == poll.movie2:
+            poll.movie2_votes += 1
+        elif movie == poll.movie3:
+            poll.movie3_votes += 1
+        else:
+            return Response({'error': 'Invalid movie choice'}, status=status.HTTP_400_BAD_REQUEST)
+
+        poll.calculate_winner()
+        poll.save()
+        serializer = self.get_serializer(poll)
+        return Response(serializer.data)
+
+class CreateNewPollView(generics.CreateAPIView):
+    serializer_class = MoviePollSerializer
+
+    def create(self, request, *args, **kwargs):
+        today = datetime.date.today()
+        weekday = today.weekday()
+        # if weekday != 2: # 2 is Wednesday
+        #     return Response({'error': 'Poll creation is only allowed on Wednesdays.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        movie1 = request.data.get('movie1')
+        movie2 = request.data.get('movie2')
+        movie3 = request.data.get('movie3')
+
+        if not all([movie1, movie2, movie3]):
+            return Response({'error': 'Movie titles are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        MoviePoll.create_new_poll(movie1, movie2, movie3)
+        return Response({'message': 'New poll created successfully.'}, status=status.HTTP_201_CREATED)
+        

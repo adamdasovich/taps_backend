@@ -6,3 +6,7 @@ class ReservationSerializer(serializers.ModelSerializer):
         model = Reservation
         fields = '__all__'
 
+class MoviePollSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MoviePoll
+        fields = '__all__'
