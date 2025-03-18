@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Reservation(models.Model):
     date = models.DateField()
@@ -11,4 +12,5 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f'Reservation for {self.guests} on {self.date} at {self.time}'
+
 
