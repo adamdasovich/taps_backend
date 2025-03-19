@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-@0wn)b0g3$%$^a1ai3u5j06+yf1+v8lsl(dz%u_=@womr85ee%"
+import os
+
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-@0wn)b0g3$%$^a1ai3u5j06+yf1+v8lsl(dz%u_=@womr85ee%') #provide a default for local development.
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['taps-backend.onrender.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -106,12 +109,11 @@ STATIC_ROOT = BASE_DIR/'staticfiles'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+import dj_database_url
+
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
 
 
