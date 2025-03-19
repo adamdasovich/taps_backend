@@ -1,1 +1,1 @@
-web: gunicorn taps_rezos.wsgi --log-file -
+web: gunicorn taps_backend.wsgi:application
