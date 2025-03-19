@@ -1,0 +1,1 @@
+web: gunicorn taps_rezos.wsgi --log-file -
