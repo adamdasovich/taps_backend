@@ -40,8 +40,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    'whitenoise.middleware.WhiteNoiseMiddleware', 
+    "django.contrib.admin", 
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -49,11 +48,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rezo_app",
     "rest_framework",
-    'corsheaders'
+    'corsheaders',
+    'taps'
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',    
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",    
     "django.middleware.common.CommonMiddleware",
@@ -63,34 +64,31 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    # Add other origins if needed
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 #allow all methods.
-CORS_ALLOW_METHODS = (
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
-)
-#allow all headers.
-CORS_ALLOW_HEADERS = (
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-)
+# CORS_ALLOW_METHODS = (
+#     'DELETE',
+#     'GET',
+#     'OPTIONS',
+#     'PATCH',
+#     'POST',
+#     'PUT',
+# )
+# #allow all headers.
+# CORS_ALLOW_HEADERS = (
+#     'accept',
+#     'accept-encoding',
+#     'authorization',
+#     'content-type',
+#     'dnt',
+#     'origin',
+#     'user-agent',
+#     'x-csrftoken',
+#     'x-requested-with',
+# )
 
-ROOT_URLCONF = "taps_rezos.urls"
+ROOT_URLCONF = "taps_backend.urls"
 
 TEMPLATES = [
     {
@@ -109,9 +107,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "taps_rezos.wsgi.application"
-
-STATIC_ROOT = BASE_DIR/'staticfiles'
-
 
 
 # Database
