@@ -106,7 +106,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "taps_rezos.wsgi.application"
+WSGI_APPLICATION = "taps_backend.wsgi.application"
 
 
 # Database
