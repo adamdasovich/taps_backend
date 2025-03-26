@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     "rezo_app",
     "rest_framework",
     'corsheaders',
-    'taps'
 ]
 
 MIDDLEWARE = [
@@ -88,7 +87,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 #     'x-requested-with',
 # )
 
-ROOT_URLCONF = "taps_backend.urls"
+ROOT_URLCONF = "taps_rezos.urls"
 
 TEMPLATES = [
     {
@@ -106,7 +105,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "taps_backend.wsgi.application"
+WSGI_APPLICATION = "taps_rezos.wsgi.application"
 
 
 # Database

@@ -69,3 +69,4 @@ urllib3==2.2.3
 uuid==1.30
 uvicorn==0.34.0
 websockets==14.1
+whitenoise==6.5.0
