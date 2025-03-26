@@ -1,0 +1,1 @@
+web: gunicorn taps_backend.wsgi:application
