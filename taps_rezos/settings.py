@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-@0wn)b0g3$%$^a1ai3u5j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.render.com']
 
 
 # Add render.com domain to allowed hosts
@@ -113,19 +113,13 @@ WSGI_APPLICATION = "taps_rezos.wsgi.application"
 import dj_database_url
 
 
-if 'DATABASE_URL' in os.environ:
-    DATABASES = {
+
+DATABASES = {
         'default': dj_database_url.config(
+            default='sqlite:///db.sqlite3',
             conn_max_age=600,
             conn_health_checks=True,
         )
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
     }
 
 
@@ -165,6 +159,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
