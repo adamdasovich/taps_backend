@@ -70,3 +70,4 @@ uuid==1.30
 uvicorn==0.34.0
 websockets==14.1
 whitenoise==6.5.0
+gunicorn==20.1.0
