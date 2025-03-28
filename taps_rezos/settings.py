@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-@0wn)b0g3$%$^a1ai3u5j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.render.com']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(' ')
 
 
 # Add render.com domain to allowed hosts
@@ -120,8 +120,9 @@ DATABASES = {
             'NAME': BASE_DIR / 'db.sqlite3'
         }
     }
+database_url = os.environ.get('DATABASE_URL')
 
-DATABASES["default"] = dj_database_url.parse('postgresql://taps_database_user:rcBrQSH6prz0zlyEOUZ804xZ6e3biBy3@dpg-cvj9m3ripnbc73e02qa0-a.ohio-postgres.render.com/taps_database')
+DATABASES["default"] = dj_database_url.parse(database_url)
 
 # postgresql://taps_database_user:rcBrQSH6prz0zlyEOUZ804xZ6e3biBy3@dpg-cvj9m3ripnbc73e02qa0-a.ohio-postgres.render.com/taps_database
 
