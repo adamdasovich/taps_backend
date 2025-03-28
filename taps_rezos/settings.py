@@ -115,12 +115,15 @@ import dj_database_url
 
 
 DATABASES = {
-        'default': dj_database_url.config(
-            default='sqlite:///db.sqlite3',
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3'
+        }
     }
+
+DATABASES["default"] = dj_database_url.parse('postgresql://taps_database_user:rcBrQSH6prz0zlyEOUZ804xZ6e3biBy3@dpg-cvj9m3ripnbc73e02qa0-a.ohio-postgres.render.com/taps_database')
+
+# postgresql://taps_database_user:rcBrQSH6prz0zlyEOUZ804xZ6e3biBy3@dpg-cvj9m3ripnbc73e02qa0-a.ohio-postgres.render.com/taps_database
 
 
 # Password validation
