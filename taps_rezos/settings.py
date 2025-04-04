@@ -21,15 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-import os
-
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-@0wn)b0g3$%$^a1ai3u5j06+yf1+v8lsl(dz%u_=@womr85ee%') #provide a default for local development.
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(' ')
-
+# Set default ALLOWED_HOSTS for local development
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost 127.0.0.1').split(' ')
 
 # Add render.com domain to allowed hosts
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
@@ -65,28 +63,6 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-#allow all methods.
-# CORS_ALLOW_METHODS = (
-#     'DELETE',
-#     'GET',
-#     'OPTIONS',
-#     'PATCH',
-#     'POST',
-#     'PUT',
-# )
-# #allow all headers.
-# CORS_ALLOW_HEADERS = (
-#     'accept',
-#     'accept-encoding',
-#     'authorization',
-#     'content-type',
-#     'dnt',
-#     'origin',
-#     'user-agent',
-#     'x-csrftoken',
-#     'x-requested-with',
-# )
-
 ROOT_URLCONF = "taps_rezos.urls"
 
 TEMPLATES = [
@@ -112,19 +88,18 @@ WSGI_APPLICATION = "taps_rezos.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 import dj_database_url
 
-
-
+# Default to SQLite for local development
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3'
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
     }
+}
+
+# If DATABASE_URL is available, use it (for production/staging)
 database_url = os.environ.get('DATABASE_URL')
-
-DATABASES["default"] = dj_database_url.parse(database_url)
-
-# postgresql://taps_database_user:rcBrQSH6prz0zlyEOUZ804xZ6e3biBy3@dpg-cvj9m3ripnbc73e02qa0-a.ohio-postgres.render.com/taps_database
+if database_url:
+    DATABASES["default"] = dj_database_url.parse(database_url)
 
 
 # Password validation
